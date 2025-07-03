@@ -1,0 +1,153 @@
+Firewall - Conceitos e Configuração Básica (FortiGate)
+🔰 Introdução
+
+    Fortigate é ótimo para pequenas empresas; para grandes, Palo Alto é indicado.
+
+    Perímetro firewall marca o início da intranet.
+
+    Tipos de firewall:
+
+        Firewall de rede: protege a rede.
+
+        Firewall de aplicação: controla acesso à aplicação dentro da rede.
+
+🛡️ Zonas do Firewall
+
+    In: zona confiável.
+
+    Out: zona não confiável.
+
+    DMZ: zona neutra, buffer entre In e Out.
+
+        Configura-se DMZ interna e externa.
+
+        Se DMZ externa for rompida, a interna pode continuar protegida.
+
+    O acesso externo via firewall acontece pela DMZ.
+
+📋 Políticas e Tabelas
+
+    Políticas definem a lógica do tráfego permitido.
+
+    Tabela de roteamento (roteador): decide como encaminhar pacotes via IP, máscara, porta e próximo salto.
+
+    Tabela de conexão (firewall stateful):
+
+        Guarda conexões ativas para inspecionar pacotes de resposta.
+
+        Se conexão já existe, não inspeciona novamente.
+
+    Comunicação só ocorre se política permitir conexão.
+
+    A intranet não recebe requisições externas, apenas envia; tráfego recebido é bloqueado.
+
+🔒 Fortigate - Configuração Básica
+
+    Configuração padrão: IP 192.168.1.99/24 (em VM deve configurar manualmente).
+
+    Fortiguard traz patches de antivírus e atualizações pela internet.
+
+    URLs a liberar caso haja outro firewall:
+
+        update.fortiguard.com
+
+        services.fortiguard.net
+
+        security.fortiguard.net
+
+    Acesso pode ser via GUI ou CLI.
+
+🌐 Zones
+
+    Controle lógico de grupos de interfaces.
+
+    Aplicam políticas para toda a zona (exemplo: VLAN, DMZ, LAN).
+
+    Permite isolar áreas da rede.
+
+    Configura tráfego intra-zona (entre interfaces da mesma zona).
+
+🖧 Interfaces
+
+    WAN: ponto de entrada da internet.
+
+        Recebe IP público do ISP.
+
+        Aplica políticas de segurança.
+
+    LAN: interface interna, IP privado para gerenciar rede.
+
+⚙️ Configuração CLI Exemplo
+
+config system interface  
+edit port1  
+set mode static  
+set ip 192.168.1.99/24  
+set allowaccess http https ping ssh  
+end  
+
+config router static  
+edit 0  
+set device port1  
+set dst 0.0.0.0/0  
+set gateway 192.168.1.1  
+end  
+
+👥 Usuários e Perfis
+
+    Criar usuários administrativos para manutenção.
+
+    Configurar perfis conforme necessidade.
+
+📡 DHCP
+
+    Pode atuar como servidor DHCP na interface configurada (ex: port1).
+
+    Processo DHCP:
+
+        Discovery (broadcast para encontrar servidor DHCP).
+
+        Offer (unicast oferecendo IP).
+
+        Request (broadcast solicitando IP).
+
+    Pode usar DHCP relay se já existir servidor DHCP na rede.
+
+🔀 VLANs
+
+    Suportam modo trunk para múltiplas redes em uma única interface física.
+
+    Criar interfaces VLAN para segmentar redes.
+
+    VLANs agrupam sub-redes logicamente.
+
+🌐 DNS e Domínio
+
+    Para usar domínios, criar zona de domínio no firewall.
+
+💾 Backup e Atualizações
+
+    Backup: baixar configuração completa.
+
+    Atualização de firmware: via Management System > Fabric Management.
+
+🔄 NAT (Network Address Translation)
+
+    IPs privados (ex: 10.0.0.0, 192.168.0.0) são convertidos para IPs públicos para acesso à internet.
+
+    ISP fornece IP público para o Fortigate.
+
+    NAT table associa IP privado a público.
+
+    Tipos de NAT:
+
+        SNAT (Source NAT): troca IP de origem privado pelo público.
+
+        DNAT (Destination NAT): troca IP público por privado para servidores acessíveis externamente.
+
+    NAT limita portas usadas, mas múltiplas conexões coexistem.
+
+    IP Pool: conjunto de IPs públicos para uso dinâmico (Overload).
+
+    One-to-One NAT: mapeia um IP privado para um IP público exclusivo.
+

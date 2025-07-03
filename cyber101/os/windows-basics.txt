@@ -1,0 +1,158 @@
+# 🪟 Windows Internals & Security Concepts
+
+## ⚠️ Por que o Windows é tão visado?
+- É amplamente utilizado e vendido.
+- Alvo frequente de **malwares** e **ataques hackers**.
+- A Microsoft define quando versões deixarão de ser suportadas.
+- Empresas dependem do Windows e são forçadas a atualizar, muitas vezes **sem preparo de hardware e rede**.
+- **Windows Server** é o sistema operacional voltado para servidores.
+
+---
+
+## 📁 File Systems
+
+### 🔸 NTFS (New Technology File System)
+- Substituiu FAT16 e FAT32.
+- Suporta:
+  - Arquivos maiores que 4GB.
+  - Permissões específicas para arquivos e pastas.
+  - Compressão de arquivos e pastas.
+  - Criptografia com **EFS (Encrypting File System)**.
+- Recuperação automática em caso de falha, usando arquivos de log.
+
+### 🔸 FAT32
+- Antigo sistema de arquivos.
+- Ainda usado em pendrives e sistemas legados.
+- **Linux** também usa FAT32 para compatibilidade.
+- **Não** possui journaling nem suporte a permissões ou criptografia.
+
+---
+
+## 🧨 ADS – Alternate Data Streams
+- Permite armazenar **metadados invisíveis** em arquivos NTFS.
+- Pode ser usado para esconder **malwares**.
+- Cada arquivo possui pelo menos um data stream chamado `$DATA`.
+- Exemplo: usando PowerShell é possível ler ADS.
+
+> **Obs:** ao mover arquivos com ADS de NTFS para FAT, o stream é perdido, pois FAT não suporta ADS.
+
+---
+
+## 🧬 System32 e Variáveis
+
+- A pasta `Windows` contém o SO.
+- `%windir%` é uma variável de ambiente que aponta para a pasta do sistema.
+  - Evita caminhos fixos.
+  - Usado para armazenar valores globais como pastas temporárias, paths, etc.
+
+---
+
+## 👤 Conta e Perfil de Usuário
+
+- Existem perfis:
+  - **Administrador:** controle total.
+  - **Usuário comum:** permissões limitadas.
+- Os perfis são armazenados em `C:\Users\`.
+- Ao criar uma nova conta, o sistema gera o perfil na primeira vez que o usuário faz login.
+- `lusrmgr.msc` acessa o gerenciador de contas locais.
+
+---
+
+## 🛡️ UAC – User Account Control
+
+- **Separa privilégios administrativos.**
+- Mesmo logado como administrador, o UAC requer confirmação ("sim/não").
+- Se o usuário não for administrador, o UAC pede as **credenciais do administrador**.
+- Ajuda a bloquear ações maliciosas feitas por programas automaticamente.
+- Pode ser configurado nas ferramentas do sistema.
+
+---
+
+## ⚙️ Configurações e Painel de Controle
+
+- `Configurações` (ícone de engrenagem): interface moderna e simplificada.
+- `Painel de Controle` (`control` no `Win + R`): opções mais avançadas e detalhadas.
+  - `Small icons` revela categorias específicas.
+
+---
+
+## 🧠 Task Manager (`taskmgr`)
+- Mostra aplicações e processos em execução.
+- `More details` revela uso de recursos: CPU, RAM, disco, rede.
+
+---
+
+## 🪛 System Configuration (`msconfig`)
+- `General`: seleciona o que será carregado no boot.
+- `Boot`, `Services`, `Startup`, `Tools`: controle e diagnóstico do sistema.
+
+---
+
+## 🖥️ Gerenciador do Computador (`compmgmt.msc`)
+
+- Acesso a:
+  - **System Tools**: visualizador de eventos, tarefas agendadas.
+  - **Storage**: discos e volumes.
+  - **Services and Applications**: serviços do sistema.
+
+### 🔎 Visualizador de Eventos
+- Tipos de logs:
+  - **Erro**: algo falhou.
+  - **Aviso**: evento que exige atenção (ex: espaço em disco).
+  - **Informação**: registro de eventos bem-sucedidos.
+  - **Success Audit / Failure Audit**: logs relacionados a permissões e segurança.
+
+---
+
+## 📊 Performance Monitor (`perfmon`)
+- Analisa métricas de desempenho em tempo real.
+
+---
+
+## 🧰 Device Manager
+- Gerencia e configura o hardware do sistema.
+
+---
+
+## 🛠️ Services
+- São aplicações que rodam em segundo plano.
+
+---
+
+## 📋 System Information (`msinfo32`)
+- Mostra:
+  - Informações de hardware, software e ambiente.
+  - Problemas conhecidos, drivers, processos, serviços.
+
+---
+
+## 📡 Resource Monitor (`resmon`)
+- Análise avançada de:
+  - **CPU**, **Disco**, **Memória** e **Rede**.
+- Pode aplicar filtros e investigar conflitos.
+- Excelente para troubleshooting.
+
+---
+
+## 💻 Comandos Úteis no CMD
+
+| Comando       | Função                                 |
+|---------------|-----------------------------------------|
+| `hostname`    | Mostra o nome do computador             |
+| `whoami`      | Mostra o nome do usuário atual          |
+| `cls`         | Limpa o terminal                        |
+| `netstat`     | Exibe conexões de rede e portas         |
+| `comando /?`  | Mostra ajuda para qualquer comando      |
+| `help <cmd>`  | Alternativa para visualizar ajuda       |
+
+---
+
+## 🧠 Registry Editor (`regedit`)
+- Banco de dados com configurações do sistema.
+- Armazena dados para:
+  - Usuários, aplicações, drivers, serviços, hardware, propriedades.
+- Áreas principais:
+  - `HKEY_LOCAL_MACHINE` – configurações do sistema.
+  - `HKEY_CURRENT_USER` – configurações do usuário logado.
+
+---

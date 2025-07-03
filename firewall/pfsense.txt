@@ -1,0 +1,144 @@
+# pfSense - Guia Básico de Instalação e Configuração
+
+## 📥 Download e Requisitos
+- pfSense é baseado em FreeBSD 64 bits.  
+- Requisitos mínimos recomendados:  
+  - CPU: 2 núcleos  
+  - Memória RAM: 2GB  
+  - Disco: 16GB  
+  - Placas de rede: 2 (uma para WAN e outra para LAN)  
+- Pode ser instalado em pendrive bootável.
+
+---
+
+## ⚙️ Instalação
+- Na tela inicial:  
+  - Selecionar "Install pfSense"  
+  - Layout do teclado: Brazilian (com acento)  
+- Opção de instalação automática com ZFS (não usa RAID, usa Stripe).  
+- Selecionar o disco para instalação.  
+- Após instalação, remover o disco ISO para evitar reinício na tela de instalação.  
+- Se instalou via pendrive, apenas remova o pendrive.
+
+---
+
+## 🖥️ Configuração Inicial via CLI
+- Aparecerá menu com opções 0 a 14 para configurar.  
+- Principais:  
+
+### 1 - Configurar interfaces  
+- Apresenta interfaces pelo MAC address.  
+- Defina qual é WAN e qual é LAN.
+
+### 2 - Configurar IPs das interfaces  
+- WAN:  
+  - Se roteador com NAT, configurar como DHCP para pegar IP automaticamente.  
+  - Pode definir IP fixo na mesma subrede WAN.  
+  - Se modo bridge, atribuir IP público direto.  
+
+- LAN:  
+  - pfSense atua como roteador e firewall.  
+  - Configure IP fixo na LAN (será o IP do firewall).  
+  - Ative DHCP para LAN para distribuir IPs internos.
+
+---
+
+## 🌐 Modo Bridge  
+- Caso o roteador esteja em modo Bridge, o pfSense controla tudo.  
+- Não há redes separadas (Wi-Fi e firewall).  
+- Basta criar um Access Point na LAN do pfSense.
+
+---
+
+## 🖧 IPs Fixos para Devices Internos  
+- Para servidores, impressoras, câmeras IP etc:  
+  - Configure IP fixo diretamente nos dispositivos ou  
+  - Use DHCP Static Mappings:  
+    - Vá em Services -> DHCP Server -> LAN -> Static Mappings  
+    - Associe MAC address ao IP fixo desejado.
+
+---
+
+## 🌐 Interface Web (GUI)
+- Acesse pelo IP da LAN configurado no navegador.  
+- Login padrão:  
+  - Usuário: `admin`  
+  - Senha: `pfsense`  
+
+### Configurações principais
+- Hostname: nome do servidor/firewall.  
+- Domain: nome do domínio.  
+- DNS: pode usar DNS do AD e DNS secundário, ex: Google DNS.  
+- Allow DNS Override: geralmente desativar (para não usar DNS da operadora).  
+- Servidor NTP: para sincronização de horário, ex: `ntp.br`.  
+- Timezone: ex: America/Sao_Paulo ou America/Brasilia.  
+- WAN e LAN: deixe padrão ou ajuste conforme necessário.  
+- Altere a senha do admin.
+
+---
+
+## 📊 Dashboard e Plugins
+- Plugins permitem visualizar detalhes do firewall, logs, status dos serviços.  
+- Exemplo: Wake on LAN, monitoramento de tráfego.
+
+---
+
+## 🔐 Regras (Policies)  
+- Por padrão, pfSense vem com tudo permitido (any to any).  
+- Melhor prática: desabilitar regra padrão (Disable default allow).  
+- Criar regras específicas para liberar serviços necessários:  
+  - DNS: porta 53 (TCP/UDP) para resolver nomes (FQDN).  
+  - NTP: porta 123 (UDP) para sincronização de horário.  
+  - ICMP: liberar echo request e echo reply para ping.  
+  - FTP: portas 20 e 21 se necessário.  
+- Marque a opção para logar essas conexões nas regras.
+
+---
+
+## 📝 Aliases (Apelidos)
+- Para permitir destinos específicos, use aliases baseados em FQDNs (Fully Qualified Domain Names).  
+- Vá em Aliases -> Add.  
+- Pode adicionar múltiplos FQDNs por serviço para facilitar regras.
+
+---
+
+## 👥 Grupos e Usuários
+- Instale pacote sudo via Package Manager para comandos administrativos.  
+- Configure autenticação LDAP para integração com Active Directory:  
+  - Hostname do AD  
+  - Porta 389 (LDAP padrão)  
+  - SSL/TLS conforme configuração  
+  - Search Scope: subtree (busca recursiva em todos os níveis)  
+  - Base DN: ex: `DC=empresa,DC=local`  
+  - Authentication Containers: local onde usuários estão (ex: `CN=Users,DC=empresa,DC=local`)  
+  - Bind Credentials: usuário criado no AD para bind LDAP.
+
+---
+
+## 🔒 Captive Portal
+- Configure em Services -> Captive Portal.  
+- Defina zone name (ex: LAN).  
+- Configure autenticação via LDAP com a conta Bind do AD.  
+- Permissões para ler usuários são necessárias.
+
+---
+
+## 🚫 pfBlockerNG  
+- Ferramenta para filtragem web e bloqueio por categorias (malware, conteúdo adulto etc.).
+
+---
+
+## 🛡️ IPS/IDS com Snort
+- Instale o pacote Snort e crie conta para obter chave.  
+- Vá em Services -> Snort para configuração.  
+- Na General Config: baixe atualizações e regras.  
+- Configure para bloquear IPs ofensores por 1 hora.  
+- Adicione interface (principalmente LAN).  
+- Ative IPS, proteção e bloqueio de ofensores.  
+- Crie alias Home Net para ignorar inspeção de tráfego local.  
+- Use pass list para exceções (falsos positivos).  
+- Alias suppress automáticos para suprimir alertas específicos.  
+- Configure categorias para LAN e selecione regras a serem aplicadas.  
+- Ajuste regras liberando ou bloqueando conforme falso positivos.
+
+---

@@ -1,0 +1,60 @@
+# Filtragem e Avaliação de Resultados para Estudo em Cybersecurity
+
+## 🧩 Avaliar Fontes na Internet
+- Na rede, qualquer um pode escrever qualquer coisa.  
+- Para estudar, é essencial **avaliar a origem**:  
+  - Quem é o autor?  
+  - A informação vem de uma revista, blog, fórum ou site confiável?
+
+---
+
+## 🔎 Pesquisa Avançada em Mecanismos de Busca
+
+### Operadores úteis:
+- `""` : Pesquisa a expressão exata dentro das aspas.  
+- `site:` : Limita a pesquisa a um domínio específico.  
+- `-` : Exclui páginas que contenham o termo após o hífen.
+
+---
+
+## 🌐 Engines e Ferramentas Importantes
+
+### Shodan  
+- Pesquisa dispositivos conectados à internet: servidores, redes, IoT, indústrias.  
+- Exemplo: buscar `Apache2.4` mostra servidores com essa versão rodando.
+
+### Censys  
+- Similar ao Shodan, mas focado em hosts e websites.
+
+### VirusTotal  
+- Ferramenta de análise de arquivos e URLs para identificar vírus e malware.
+
+### Have I Been Pwned  
+- Verifica se um e-mail ou conta foi comprometida em vazamentos (breachs).
+
+---
+
+## 🛡️ Vulnerabilidades e Exploits
+
+### CVE (Common Vulnerabilities and Exposures)  
+- Dicionário padrão de vulnerabilidades.  
+- Cada vulnerabilidade tem um ID único, ex: `CVE-2024-29988`.
+
+### Exploit Database  
+- Banco de dados com códigos de ataque prontos.  
+- PoC (Proof of Concept): prova que a falha existe, mas não necessariamente um exploit funcional.
+
+### GitHub  
+- Também possui vários exploits publicados por pesquisadores.
+
+---
+
+## 📚 Documentação Técnica
+
+- **Manual Pages (man pages):** documentação detalhada dos comandos em sistemas Unix-like.  
+- Inclui configuração de arquivos, funções e comandos.  
+- No passado, era o principal recurso para aprender a usar comandos sem internet.  
+- Microsoft possui documentação técnica oficial.  
+- No Google, geralmente se busca documentação oficial para melhores resultados.
+
+---

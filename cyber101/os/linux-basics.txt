@@ -1,0 +1,145 @@
+# 🐚 Comandos e Conceitos Básicos de Shell e Linux
+
+## 📍 pwd
+Mostra em qual diretório você está trabalhando.  
+**Significado:** Print Working Directory.
+
+---
+
+## 📂 cat
+Exibe o conteúdo de um arquivo.
+
+---
+
+## 🔍 find
+Busca arquivos sem precisar navegar pelos diretórios.  
+Exemplos:  
+- `find -name nomedoarquivo` — procura arquivo pelo nome exato.  
+- `find -name "*.txt"` — procura todos os arquivos que terminam com `.txt`.
+
+---
+
+## 🔎 grep
+Procura dentro de arquivos por linhas que contenham o texto informado.  
+Exemplo: `grep find access.log` — procura por “find” dentro do arquivo `access.log`.
+
+---
+
+## ⚙️ Operadores de Shell
+
+- `&` : executa o comando em background (permite continuar usando o terminal enquanto roda).  
+- `&&` : executa uma lista de comandos em sequência (o próximo só roda se o anterior tiver sucesso).  
+- `>` : redireciona a saída de um comando para um arquivo (sobrescreve o arquivo).  
+- `>>` : redireciona a saída, mas adiciona ao final do arquivo (não apaga o conteúdo existente).
+
+---
+
+## 🔐 SSH (Secure Shell)
+
+Protocolo para comunicação segura entre dispositivos, usa criptografia.  
+Permite enviar comandos para outra máquina e transferir arquivos.
+
+- Para logar:  
+  `ssh username@IP`  
+- Precisa do IP e credenciais para acesso.
+
+---
+
+## ⚙️ Flags  
+Parâmetros que modificam o comportamento de comandos.  
+Exemplo:  
+`--help` mostra as opções e ajuda do comando.  
+`man` mostra a documentação.
+
+---
+
+## 🛠️ Comandos Úteis
+
+- `touch` — cria arquivo vazio.  
+- `mkdir` — cria diretório.  
+- `cp` — copia arquivos. Ex: `cp note note2` copia `note` para `note2`.  
+- `mv` — move ou renomeia arquivos.  
+- `file` — identifica o tipo de arquivo.
+
+---
+
+## 🔐 Permissões e Diretórios
+
+### Diagrama de Permissão  
+Exemplo: `-rwxrwxrwx`  
+- O primeiro caractere indica o tipo do arquivo.  
+- Os próximos 9 são divididos em três grupos de três: dono, grupo, outros.  
+- Letras:  
+  - `r` — leitura (read)  
+  - `w` — escrita (write)  
+  - `x` — execução (execute)
+
+---
+
+### Exemplo prático  
+Se uma aplicação precisa escrever em um arquivo, mas a empresa não quer que o arquivo seja modificado, configura-se a permissão para que apenas o dono possa escrever.
+
+---
+
+## 📁 Diretórios Comuns
+
+- `/etc` — arquivos de configuração do sistema. Contém arquivos como:  
+  - `sudoers` (quem pode usar sudo)  
+  - `shadow` e `passwd` (senhas criptografadas).  
+- `/var` — dados variáveis usados frequentemente pelo sistema.  
+- `/root` — diretório home do usuário root (superusuário).  
+- `/tmp` — arquivos temporários, voláteis e descartáveis.
+
+---
+
+## 📝 Editores de Texto
+
+- `nano` — editor simples para arquivos grandes.  
+  - Comandos: navegar com setas, Enter para nova linha, Ctrl + tecla para ações.  
+- `vim` — editor avançado e poderoso.
+
+---
+
+## 📥 wget  
+Baixa arquivos via URL.
+
+---
+
+## 🔄 scp  
+Copia arquivos entre máquinas pela rede usando SSH (Secure Copy).
+
+---
+
+## ⚙️ Processos
+
+- Cada processo em execução tem um PID (Process ID).  
+- `ps` lista processos ativos na sessão atual.  
+- `ps aux` lista todos os processos do sistema.  
+- `top` exibe estatísticas em tempo real dos processos.  
+- `kill <PID>` termina um processo.
+
+---
+
+## 🌐 Namespace  
+Isola recursos e processos no sistema.
+
+---
+
+## ⏰ Automação com cron
+
+- Usado para agendar tarefas automaticamente (ex: backups).  
+- Arquivo crontab: `* 12 * * * comando` (minuto, hora, dia do mês, mês, dia da semana, comando).  
+- Comando para editar crontab: `crontab -e`.
+
+---
+
+## 📦 Pacotes e Atualizações
+
+- `apt` é o gerenciador de pacotes usado para instalar, atualizar softwares.  
+- Usa chaves para manter a segurança das transações.
+
+---
+
+## 📜 Logs
+
+- Diretório `/var/log` contém vários registros e logs do sistema.

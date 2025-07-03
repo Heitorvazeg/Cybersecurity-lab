@@ -1,0 +1,98 @@
+Autenticação e Segurança no Fortigate
+🔐 Autenticação
+
+    Para acessar a internet, pode ser exigido login (autenticação).
+
+    Usuário pode ser local no Fortigate ou em servidor externo (ex: Active Directory).
+
+    Modos:
+
+        Ativa: usuário precisa fazer login para acessar.
+
+        Passiva: autenticação automática (passivo mestre).
+
+    Suporta autenticação de 2 fatores (2FA).
+
+    Permite trabalhar com grupos de usuários para facilitar regras e políticas.
+
+👤 Criar usuário local
+
+    Menu: User Authentication -> User Definition -> Create New
+
+    Pode associar usuários a grupos locais criados em User Groups.
+
+    Usuários locais são independentes do AD.
+
+🖧 Configurar LDAP (Active Directory)
+
+    Menu: User Authentication -> LDAP -> New
+
+    Definir IP do servidor AD.
+
+    Common Name Identifier: samAccountName
+
+    Pode criar grupos baseados no AD para usar em políticas (ex: GRP users).
+
+    Grupo AD deve ser referenciado como source na política de firewall.
+
+🌐 Web Filtering
+
+    Web filtering funciona integrado com FortiGuard (licenciado).
+
+    URL filtering: bloqueio por categorias (ex: redes sociais, jogos).
+
+    Configuração:
+
+        Security Profile -> Web Filtering -> New
+
+        Pode ativar nas políticas de firewall para tráfego geral de internet.
+
+📱 Controle de Aplicações (App Control)
+
+    Controla uso de aplicações nas máquinas da rede (não URLs).
+
+    Usa assinaturas padrão e categorias (necessita licença).
+
+    Pode bloquear apps ou endpoints específicos.
+
+    Deve ser associado à política de firewall.
+
+🌐 DNS Filtering
+
+    Semelhante ao URL filtering, mas bloqueia via DNS.
+
+    Bloqueia tudo de domínios indesejados.
+
+    Configuração similar ao URL filtering.
+
+🛡️ Anti-vírus
+
+    Criar perfil novo para inspeção de protocolos (HTTP, FTP, SMTP etc).
+
+    Configuração: config antivirus settings.
+
+🔑 VPN
+
+    Permite acessar a rede remotamente via túneis seguros pela internet.
+
+    Tipos:
+
+        Site to Site: conexão entre redes diferentes.
+
+        Remote Access: acesso de usuário individual remoto.
+
+    O túnel usa criptografia para segurança.
+
+    Criar grupo VPN para usuários autorizados (normalmente TI).
+
+    Criar endereço para rede remota (IP público).
+
+⚙️ Configurar IPsec Tunnel
+
+    Criar novo túnel: NEW (custom ou remote access)
+
+    Definir interface WAN e remote gateway (IP remoto).
+
+    Configurar pool de IP para usuários remotos.
+
+    Criar política firewall para tráfego VPN → WAN sem NAT.

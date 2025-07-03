@@ -1,0 +1,147 @@
+# Cybersecurity – Introdução e Cenários de Ameaças
+
+## 🔐 Segurança Digital Hoje  
+- A segurança digital é tão importante quanto a segurança física.  
+- Com o aumento do trabalho remoto, os ataques cibernéticos cresceram.  
+- Firewalls protegem o gateway da rede, controlando o acesso entre a internet e a intranet.
+
+---
+
+## ⚠️ Ameaças e Conceitos Básicos  
+- **Ameaças** são divididas em: vulnerabilidades, riscos e ataques.  
+- **Firewall:** protege a rede interna (intranet) bloqueando tráfego malicioso da internet.  
+- **Malware:** software malicioso que causa danos ou rouba dados.  
+  - Tipos comuns:  
+    - Ransomware: bloqueia acesso aos próprios dados.  
+    - Spyware: monitora ações do usuário e coleta informações.  
+    - Adware: exibe anúncios indesejados.  
+    - Denial of Service (DoS): sobrecarrega sistemas com requisições, bloqueando acessos legítimos.  
+    - Spam: envio massivo de mensagens indesejadas.
+
+---
+
+## 🔑 Segurança Básica  
+- Senhas fortes são essenciais para prevenir muitos ataques.  
+- Padrões fracos de senha facilitam ataques e podem permitir se passar por outra pessoa (spoofing).  
+- **Security Breach:** violação de segurança, acesso não autorizado a sistemas ou dados.
+
+---
+
+## 💻 Fundamentos de Hardware e Computação  
+- Placa-mãe conecta todos os componentes.  
+- CPU: processa dados; pode ter múltiplos núcleos para multitarefa.  
+- RAM: memória de curto prazo para tarefas em execução.  
+- Disco (SSD/HDD): armazenamento permanente, SSD é mais rápido.  
+- Input, Processing, Storage e Output são as etapas básicas de um sistema computacional.
+
+---
+
+## 🖥️ Sistemas Operacionais  
+- Gerenciam hardware, oferecem interface e controlam recursos.  
+- Exemplos:  
+  - Windows: interface gráfica, pré-instalado em muitos PCs.  
+  - Android: open source, usado em dispositivos móveis.  
+  - Ubuntu/Linux: popular para computação em nuvem.
+
+---
+
+## 🔄 Backup e Recuperação  
+- Backup mantém cópias dos dados para evitar perdas.  
+- Recuperação usa backups para restaurar sistemas após falhas.  
+- Backups devem ser frequentes e atualizados.
+
+---
+
+## 🌐 Redes e Comunicação  
+- Rede conecta dispositivos para compartilhar recursos.  
+- Tipos de redes:  
+  - PAN: pequenas redes pessoais (ex: smartphone + smartwatch).  
+  - LAN: rede local com fio.  
+  - WLAN: rede local sem fio.  
+  - WAN: conecta várias LANs, incluindo a internet.  
+- VPN cria conexão segura e criptografada entre dispositivos em redes não confiáveis.
+
+---
+
+## 🔄 Topologias de Rede  
+- Bus: todos conectados num único cabo.  
+- Ring: conexões em anel.  
+- Star: todos conectados a um switch central.
+
+---
+
+## 🌐 Protocolos e Endereçamento  
+- IP (Internet Protocol) roteia dados entre redes.  
+- IPv4 usa endereços de 0 a 255, divididos em classes A, B e C com diferentes máscaras de sub-rede.  
+- Subredes dividem grandes redes em pequenas para organização e segurança.  
+- Roteadores encaminham pacotes entre redes distintas.
+
+---
+
+## ☁️ Infraestrutura e Cloud Computing  
+- Redes híbridas misturam dispositivos com fio e wireless.  
+- Cloud computing pode ser pública (Azure, AWS) ou privada (data center próprio).
+
+---
+
+## 📚 Modelo OSI  
+- Divide comunicação em 7 camadas para facilitar diagnóstico:  
+  1. Física  
+  2. Enlace de dados  
+  3. Rede  
+  4. Transporte  
+  5. Sessão  
+  6. Apresentação  
+  7. Aplicação
+
+---
+
+## 🔢 Portas e Serviços  
+- Portas identificam pontos de entrada para protocolos:  
+  - HTTP: 80  
+  - HTTPS: 443  
+  - DNS: 53  
+  - DHCP: 67/68  
+- Firewalls controlam acesso baseado em portas.
+
+---
+
+## 🕵️‍♂️ Offensive Security  
+- Foco em buscar vulnerabilidades e explorá-las para demonstrar falhas reais.  
+- Ferramenta exemplo: **Gobuster** para brute-force em diretórios web.  
+- Carreiras:  
+  - Pentester (testa vulnerabilidades).  
+  - Red Teamer (simula ataques reais).  
+  - Security Engineer (projeta e monitora soluções).
+
+---
+
+## 🛡️ Defensive Security  
+- Previne ataques, detecta intrusões e responde a incidentes.  
+- Faz parte do Blue Team, trabalha com firewalls, IPS, forense digital, análise de malware etc.  
+- SOC monitora eventos de segurança em tempo real.  
+- Threat Intelligence analisa dados para antecipar ameaças.  
+- SIEM monitora e correlaciona eventos suspeitos.
+
+---
+
+## 🔍 DFIR (Digital Forensics and Incident Response)  
+- Forense digital investiga crimes digitais analisando evidências: cópias bit a bit, memória, logs.  
+- Incident Response segue etapas: preparação, detecção, contenção, erradicação, recuperação e relatório.
+
+---
+
+## 🦠 Análise de Malware  
+- Malware tipos: cavalos de troia, ransomware, vírus.  
+- Análise pode ser estática (sem executar) ou dinâmica (em ambiente isolado).
+
+---
+
+## 👨‍💻 Perfis Profissionais em Cybersecurity  
+- Analista de Segurança: monitora dados e identifica ataques.  
+- Engenheiro de Segurança: desenvolve soluções e monitora sistemas.  
+- Incident Responder: responde rapidamente a ataques.  
+- Especialista Forense: investiga digitalmente.  
+- Analista de Malware: realiza engenharia reversa e análise.  
+- Pentester: testa vulnerabilidades.  
+- Red Teamer: simula ataques para testar defesas.
