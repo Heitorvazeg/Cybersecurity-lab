@@ -156,3 +156,72 @@
   - `HKEY_CURRENT_USER` – configurações do usuário logado.
 
 ---
+
+## 🔄 Updates
+
+- Onde se pegam novos patches e atualizações do sistema operacional.
+- Logs de atualizações disponíveis para auditoria.
+
+---
+
+## 🛡️ Segurança
+
+### 🔒 Áreas de Proteção
+
+- **4 Áreas**:
+  - Virus & Threat Protection
+  - Firewall & Network Protection
+  - App & Browser Control
+  - Device Security
+
+> 🟢 Verde: tudo ok | 🟡 Amarelo: aviso | 🔴 Vermelho: risco
+
+### 🦠 Virus & Threat Protection
+
+- **Current Threats**: escaneia pastas e verifica histórico de ameaças.
+- **Virus & Threat Settings**:
+  - Real-time protection
+  - Cloud protection
+  - Controlled folder access
+- **Ransomware protection** também está incluído.
+
+> **Dica:** Clique com o botão direito em arquivos/pastas para escanear com o Microsoft Defender.
+
+### 🔥 Firewall & Network Protection
+
+- Acesse com `WF.msc`.
+- Perfis:
+  - **Domínio**: redes com autenticação via controlador de domínio.
+  - **Privado**: redes domésticas ou de confiança.
+  - **Público**: redes públicas como Wi-Fi.
+- Permite apps por exceção.
+
+### 🌐 App & Browser Control
+
+- Proteção contra phishing e sites maliciosos.
+- **SmartScreen** verifica apps e serviços desconhecidos.
+- **Exploit Protection** protege contra ataques de baixo nível.
+
+### 💾 Device Security
+
+- **Core Isolation**: processos de alta segurança.
+- **TPM**: chip físico com mecanismos de segurança.
+- **BitLocker**: criptografia de disco, usa TPM para proteção de dados.
+- **VSS** (Volume Shadow Copy Service): backups e restauração de sistema.
+
+---
+
+## 🧱 Active Directory (AD)
+
+- Essencial em ambientes corporativos.
+- Gerencia usuários, serviços e dispositivos centralmente.
+
+### 🏢 Domínios Windows
+
+- Agrupamento de usuários e máquinas sob administração central.
+- O **Domain Controller (DC)** é o servidor com AD instalado.
+- Possível aplicar **políticas de segurança em escala**.
+
+### 🧩 AD DS (Active Directory Domain Services)
+
+- Serviço principal do AD para gerenciamento de domínios.
