@@ -1,0 +1,80 @@
+🔄 Firewall Policies
+
+    Conjunto de regras que definem todo tráfego pelo Fortigate.
+
+    Configurações principais:
+
+        Interface (onde entra o tráfego)
+
+        Origem (source)
+
+        Destino (destination)
+
+        Schedule (horários permitidos)
+
+        Service (tipo de serviço/protocolo)
+
+        Action (permitir ou negar)
+
+        NAT (ativado ou não)
+
+        Security Profile (ex: web filtering, antivírus)
+
+        Logs (habilitar para monitorar)
+
+    Política padrão (de fábrica) nega todo tráfego não listado (action deny).
+
+    Regras devem liberar o tráfego necessário.
+
+📦 Objetos em Políticas
+
+    Tipos de objetos usados nas políticas:
+
+        Interfaces
+
+        Zonas
+
+        Endereços (IPs, sub-redes)
+
+        Usuários
+
+        Serviços (protocolos)
+
+        Calendários (schedules)
+
+        Regras de NAT
+
+        Perfis de segurança (security profile)
+
+    Para aplicar regras iguais em várias interfaces, use zonas.
+
+    Se aplicar zona numa interface com políticas existentes, pode causar conflito (elimine as políticas antigas primeiro).
+
+🌐 FQDN (Fully Qualified Domain Name)
+
+    Permite definir URLs específicas para liberar via DNS.
+
+    Exemplo: usar DNS do Google para resolver URLs.
+
+🗺️ Endereços e Políticas
+
+    Pode criar objetos de endereço para regiões geográficas, LANs, IPs específicos.
+
+    Em políticas, pode usar múltiplos objetos de origem.
+
+    Pode usar usuário configurado para controle de acesso baseado em login.
+
+⏰ Schedule (Agendamento)
+
+    Permite definir horários para quando as políticas estarão ativas.
+
+🔄 NAT
+
+    Virtual IP (VIP) é o DNAT.
+
+    Evite expor o Fortigate diretamente na internet. Use VPN para acessar a interface de gerenciamento.
+
+    NAT processa regras sequencialmente na tabela; para na primeira regra que corresponder.
+
+    Regras mais específicas devem vir antes das gerais.
+
