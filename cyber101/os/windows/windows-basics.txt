@@ -225,3 +225,53 @@
 ### 🧩 AD DS (Active Directory Domain Services)
 
 - Serviço principal do AD para gerenciamento de domínios.
+
+objetos do ad:
+usuario: maiscomum; security principals; podem ser autenticados pelo dominio.
+Usuarios sao people ou services. Services sao usuarios que rodam apenas
+services especificos.
+
+machines:
+cada computador se torna uma maquina. Os computadores sao como os administradorres
+locais deles mesmo. Se vc tem a senha consegue logar.
+Nomes de maquinas: DC01$, o dolar segue todo nome de maquina.
+
+security groups:
+Grupos pra definir acessos e recursos. Pode ter grupo de maquinas ou usuarios.
+Grupos padroes: Domain admins, server operators, backup operatos, domain users...
+
+OU -> organization unitys. Representa as partes do dominio.
+Diferente de grupos, logica mais ampla.
+Groups sao usados para garantir recursos e permissoes.
+OUs sao usados para aplicar politicas.
+
+folders padrao:
+builtin: GRupos padroes.
+Computers: computadores que estao no dominio.
+DOmain controllers: OU padrao que contem o DC.
+Users: Usuarios e grupos que estao no dominino.
+Service accountes: cONTAS Que estao sendo usadas por serviços no domninio.
+
+administrando usuarios e OUs:
+Por padrao OUs tem bloqueio de deletar.
+Pra retirar, ta em view e visualizar avançado, e objeto.
+
+delegation:
+delega controle sobre OUs sem precisar de uma permissao de admn.
+UM otimo caso e o pessoal de TI que pode alterar contas de outros,
+mas nao de superiores.
+
+RDP remote desktop connection:
+permite vc logar em outro usuario.
+mstsc e o comando.
+
+
+administrando maquinas:
+todas as maquinas exceto o DC vao estar em computers.
+LPT Laptop, PC e SRV pra servidor.
+Tipos de forma de organizar:
+Workstations: maquinas de trabalho.
+Servers: servidores.
+Domain cntrolers: os DCs.
+
+Criar no proprio thm.local.

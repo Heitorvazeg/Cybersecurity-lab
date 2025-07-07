@@ -1,0 +1,136 @@
+# 🧱 Active Directory (AD) - Visão Geral
+
+Este documento resume os principais conceitos e práticas de administração em um ambiente **Windows Domain** com **Active Directory (AD)**, incluindo estrutura, objetos, controle de acesso, e políticas de grupo.
+
+---
+
+## 📌 O que é o Active Directory?
+
+O **Active Directory (AD)** é essencial em ambientes corporativos:
+
+- Permite o **gerenciamento centralizado** de usuários, computadores, serviços e permissões.
+- Utilizado para **autenticação, autorização e aplicação de políticas de segurança** em larga escala.
+
+---
+
+## 🏢 Domínios Windows
+
+- Um domínio é um agrupamento lógico de objetos AD (usuários, máquinas, serviços).
+- O **Domain Controller (DC)** é o servidor responsável por autenticar e aplicar políticas.
+- Facilita a administração de infraestrutura via **políticas em escala**.
+
+---
+
+## 🧩 Active Directory Domain Services (AD DS)
+
+- Serviço principal do Active Directory.
+- Responsável por armazenar informações de diretório e gerenciar a interação com usuários e domínios.
+
+---
+
+## 📦 Objetos do AD
+
+### 👤 Usuários
+
+- São os **security principals** mais comuns.
+- Podem ser pessoas ou serviços.
+- **Usuários de serviço** são usados para execução de processos específicos e automações.
+
+### 💻 Máquinas
+
+- Cada computador ingressado no domínio se torna um **objeto de máquina**.
+- Computadores têm nomes como `PC01$`, `SRV01$`, `DC01$` (o símbolo `$` indica nome de máquina).
+- São tratados como administradores locais de si mesmos (se tiver a senha, é possível logar localmente).
+
+### 🛡️ Security Groups
+
+- Utilizados para **controlar acesso a recursos** (como arquivos, impressoras, sistemas, etc).
+- Podem conter **usuários ou máquinas**.
+- Grupos padrão:
+  - `Domain Admins`
+  - `Server Operators`
+  - `Backup Operators`
+  - `Domain Users`
+
+### 🗂️ Organizational Units (OU)
+
+- Representam **partes lógicas da organização**.
+- Diferem de grupos: **não são para permissões diretas**, mas sim para **aplicação de políticas**.
+- Exemplo: separar `OU=Financeiro`, `OU=TI`, etc., para aplicar GPOs diferentes.
+
+---
+
+## 📁 Estrutura de Pastas Padrão do AD
+
+| Pasta/OU             | Função                                                |
+|----------------------|--------------------------------------------------------|
+| `Builtin`            | Contém grupos padrão do domínio                        |
+| `Computers`          | Onde máquinas ingressadas são listadas por padrão      |
+| `Domain Controllers` | OU que contém o(s) DC(s)                               |
+| `Users`              | Usuários e grupos padrão do domínio                    |
+| `Managed Service Accounts` | Contas de serviço para execução de tarefas automatizadas |
+
+---
+
+## 🔧 Administração de Usuários e OUs
+
+- Por padrão, OUs vêm com proteção contra exclusão.
+- Para desabilitar:
+  1. Vá em **View > Advanced Features**.
+  2. Vá em **Propriedades da OU > Aba "Objeto"**.
+  3. Desmarque a opção "Protect object from accidental deletion".
+
+---
+
+## 🔄 Delegação (Delegation)
+
+Permite delegar **controle administrativo limitado** sobre OUs sem dar acesso total.
+
+Exemplo:
+- Delegar a um técnico da TI a permissão para **resetar senhas** de contas dentro da OU "Estagiários", sem acesso à OU "Diretoria".
+
+---
+
+## 🖥️ Administração de Máquinas
+
+- Todas as máquinas (exceto DCs) são registradas em `Computers`.
+- Convenção comum de nomes:
+  - `LPT` → Laptops
+  - `PC` → Estações de trabalho
+  - `SRV` → Servidores
+
+### Organização comum:
+
+- `OU=Workstations` → Máquinas de trabalho
+- `OU=Servers` → Servidores
+- `OU=Domain Controllers` → Controladores de domínio
+
+---
+
+## 🧑‍💻 Conexão Remota (RDP)
+
+Permite acessar máquinas no domínio com contas autorizadas.
+
+### Como usar:
+1. Pressione `Win + R` e digite `mstsc`.
+2. Digite o nome da máquina (ex: `SRV01`) e clique em "Connect".
+3. Digite o usuário no formato:  
+   - `DOMINIO\usuario`  
+   - ou `usuario@dominio.local`
+
+> **Importante**: o usuário precisa estar no grupo `Remote Desktop Users` da máquina de destino, ou ter permissão via GPO.
+
+---
+
+## 🧩 Políticas de Grupo (Group Policy Objects - GPO)
+
+- GPOs são **coleções de configurações aplicadas a OUs**.
+- Usadas para:
+  - Aplicar restrições (bloquear painel de controle, instalar software, scripts de logon etc)
+  - Configurar segurança, firewall, rede e mais.
+
+### Ferramenta:
+
+- Acesse via **Group Policy Management Console (GPMC)**:
+  ```bash
+  gpmc.msc

@@ -1,84 +1,104 @@
-Firewall - Conceitos e Configuração Básica (FortiGate)
-🔰 Introdução
+# 🔥 Firewall - Conceitos e Configuração Básica (FortiGate)
 
-    Fortigate é ótimo para pequenas empresas; para grandes, Palo Alto é indicado.
+Este guia apresenta os fundamentos de firewalls e os principais conceitos de configuração usando **FortiGate**, uma solução de segurança de rede bastante utilizada em ambientes corporativos.
 
-    Perímetro firewall marca o início da intranet.
+---
 
-    Tipos de firewall:
+## 🔰 Introdução
 
-        Firewall de rede: protege a rede.
+- **FortiGate** é ideal para **pequenas empresas**.  
+- **Palo Alto** é mais indicado para ambientes de **grande porte**.
+- O **perímetro firewall** marca o início da intranet, sendo o ponto de controle entre rede interna e externa.
 
-        Firewall de aplicação: controla acesso à aplicação dentro da rede.
+### Tipos de Firewall:
 
-🛡️ Zonas do Firewall
+| Tipo                 | Função                                          |
+|----------------------|--------------------------------------------------|
+| **Firewall de Rede** | Protege a infraestrutura de rede.               |
+| **Firewall de Aplicação** | Controla o acesso à aplicação dentro da rede. |
 
-    In: zona confiável.
+---
 
-    Out: zona não confiável.
+## 🛡️ Zonas do Firewall
 
-    DMZ: zona neutra, buffer entre In e Out.
+- **In**: zona confiável (ex: LAN).
+- **Out**: zona não confiável (ex: Internet).
+- **DMZ**: zona neutra entre In e Out.
 
-        Configura-se DMZ interna e externa.
+### DMZ (Demilitarized Zone)
 
-        Se DMZ externa for rompida, a interna pode continuar protegida.
+- Possui **DMZ interna** e **externa**.
+- Se a **DMZ externa** for comprometida, a interna ainda estará protegida.
+- Acesso externo à rede **deve passar pela DMZ**.
 
-    O acesso externo via firewall acontece pela DMZ.
+---
 
-📋 Políticas e Tabelas
+## 📋 Políticas e Tabelas
 
-    Políticas definem a lógica do tráfego permitido.
+### 🔧 Políticas
 
-    Tabela de roteamento (roteador): decide como encaminhar pacotes via IP, máscara, porta e próximo salto.
+- Definem a **lógica do tráfego permitido** (quem pode acessar o quê, quando e como).
 
-    Tabela de conexão (firewall stateful):
+### 📚 Tabelas Importantes
 
-        Guarda conexões ativas para inspecionar pacotes de resposta.
+| Tabela             | Descrição                                                                 |
+|--------------------|--------------------------------------------------------------------------|
+| **Roteamento**      | Decide como encaminhar pacotes com base em IP, máscara, porta e gateway. |
+| **Conexão (Stateful)** | Armazena conexões ativas para permitir inspeção de pacotes de retorno. |
 
-        Se conexão já existe, não inspeciona novamente.
+### 🧩 Observações
 
-    Comunicação só ocorre se política permitir conexão.
+- A **comunicação só ocorre** se houver **política permitindo**.
+- A intranet **não aceita conexões externas** por padrão (firewall bloqueia).
 
-    A intranet não recebe requisições externas, apenas envia; tráfego recebido é bloqueado.
+---
 
-🔒 Fortigate - Configuração Básica
+## 🔒 FortiGate - Configuração Básica
 
-    Configuração padrão: IP 192.168.1.99/24 (em VM deve configurar manualmente).
+### 🔧 Configuração Padrão
 
-    Fortiguard traz patches de antivírus e atualizações pela internet.
+- IP padrão: `192.168.1.99/24`
+- Em máquinas virtuais, a configuração deve ser feita manualmente.
 
-    URLs a liberar caso haja outro firewall:
+### 🌐 FortiGuard
 
-        update.fortiguard.com
+- Traz patches de antivírus e atualizações.
+- Libere acesso às URLs abaixo, caso haja outro firewall:
 
-        services.fortiguard.net
+    update.fortiguard.com
 
-        security.fortiguard.net
+    services.fortiguard.net
 
-    Acesso pode ser via GUI ou CLI.
+    security.fortiguard.net
 
-🌐 Zones
+    ### Modos de Acesso:
 
-    Controle lógico de grupos de interfaces.
+- **GUI (Web)**
+- **CLI (Linha de Comando)**
 
-    Aplicam políticas para toda a zona (exemplo: VLAN, DMZ, LAN).
+---
 
-    Permite isolar áreas da rede.
+## 🌐 Zones (Zonas)
 
-    Configura tráfego intra-zona (entre interfaces da mesma zona).
+- **Zonas** são agrupamentos lógicos de interfaces.
+- Usadas para aplicar políticas a múltiplas interfaces ao mesmo tempo.
+- Permite isolar e segmentar diferentes áreas da rede.
+- É possível controlar tráfego **entre interfaces da mesma zona** (intra-zone).
 
-🖧 Interfaces
+---
 
-    WAN: ponto de entrada da internet.
+## 🖧 Interfaces
 
-        Recebe IP público do ISP.
+| Interface | Função                                          |
+|-----------|--------------------------------------------------|
+| **WAN**    | Entrada da internet (recebe IP público do ISP).  |
+| **LAN**    | Rede interna (usa IPs privados).                 |
 
-        Aplica políticas de segurança.
+---
 
-    LAN: interface interna, IP privado para gerenciar rede.
+## ⚙️ Exemplo de Configuração CLI
 
-⚙️ Configuração CLI Exemplo
-
+```shell
 config system interface  
 edit port1  
 set mode static  
@@ -93,61 +113,88 @@ set dst 0.0.0.0/0
 set gateway 192.168.1.1  
 end  
 
-👥 Usuários e Perfis
+## 👥 Usuários e Perfis
 
-    Criar usuários administrativos para manutenção.
+- Crie **usuários administrativos** para tarefas de manutenção do FortiGate.
+- É possível **configurar perfis** personalizados com permissões específicas para diferentes funções.
 
-    Configurar perfis conforme necessidade.
+---
 
-📡 DHCP
+## 📡 DHCP
 
-    Pode atuar como servidor DHCP na interface configurada (ex: port1).
+FortiGate pode atuar como servidor **DHCP** para entregar IPs automaticamente aos dispositivos da rede.
 
-    Processo DHCP:
+### 🧾 Processo DHCP:
 
-        Discovery (broadcast para encontrar servidor DHCP).
+1. **Discovery** – Cliente envia broadcast buscando um servidor DHCP.  
+2. **Offer** – Servidor responde oferecendo um IP (via unicast).  
+3. **Request** – Cliente solicita o IP recebido.  
+4. **Acknowledge** – Servidor confirma a concessão do IP.
 
-        Offer (unicast oferecendo IP).
+- Caso já exista um servidor DHCP na rede, o FortiGate pode funcionar como **DHCP Relay**.
 
-        Request (broadcast solicitando IP).
+---
 
-    Pode usar DHCP relay se já existir servidor DHCP na rede.
+## 🔀 VLANs (Virtual LANs)
 
-🔀 VLANs
+- FortiGate **suporta trunking**, permitindo múltiplas VLANs por interface física.
+- Ideal para segmentar redes **lógica e organizacionalmente**.
+- Cada **interface VLAN** pode ter suas próprias políticas e regras.
 
-    Suportam modo trunk para múltiplas redes em uma única interface física.
+---
 
-    Criar interfaces VLAN para segmentar redes.
+## 🌐 DNS e Zona de Domínio
 
-    VLANs agrupam sub-redes logicamente.
+- Para permitir **uso de domínios internos**, você pode configurar uma **zona de domínio** diretamente no FortiGate.
+- Isso é útil em redes com resolução DNS personalizada ou ambientes corporativos integrados.
 
-🌐 DNS e Domínio
+---
 
-    Para usar domínios, criar zona de domínio no firewall.
+## 💾 Backup e Atualizações
 
-💾 Backup e Atualizações
+### 🔄 Backup
 
-    Backup: baixar configuração completa.
+- Salve a configuração atual do dispositivo FortiGate:
+  - Via GUI (web)
+  - Via CLI (`execute backup config`)
 
-    Atualização de firmware: via Management System > Fabric Management.
+### 📈 Atualizações de Firmware
 
-🔄 NAT (Network Address Translation)
+- Menu:  
+  `System > Fabric Management > Firmware`
+- Recomenda-se sempre manter o FortiGate **atualizado com o firmware estável mais recente**.
 
-    IPs privados (ex: 10.0.0.0, 192.168.0.0) são convertidos para IPs públicos para acesso à internet.
+---
 
-    ISP fornece IP público para o Fortigate.
+## 🔄 NAT (Network Address Translation)
 
-    NAT table associa IP privado a público.
+NAT permite que dispositivos com **IPs privados** acessem a internet usando **IP público**.
 
-    Tipos de NAT:
+### 💡 Cenário Comum
 
-        SNAT (Source NAT): troca IP de origem privado pelo público.
+- FortiGate recebe IP público do **ISP**.
+- Dispositivos internos usam IPs como `192.168.x.x` ou `10.x.x.x`.
 
-        DNAT (Destination NAT): troca IP público por privado para servidores acessíveis externamente.
+### 📘 Tabela NAT
 
-    NAT limita portas usadas, mas múltiplas conexões coexistem.
+- Mantém associações entre IPs **internos e externos** para controle de tráfego.
 
-    IP Pool: conjunto de IPs públicos para uso dinâmico (Overload).
+### Tipos de NAT:
 
-    One-to-One NAT: mapeia um IP privado para um IP público exclusivo.
+| Tipo   | Descrição |
+|--------|-----------|
+| **SNAT (Source NAT)** | Troca o IP de origem (privado) por um IP público. |
+| **DNAT (Destination NAT)** | Redireciona o IP público para um IP interno (ex: servidores). |
 
+### 🧰 Recursos Adicionais
+
+- **IP Pool**: conjunto de IPs públicos usados dinamicamente (modo Overload).
+- **One-to-One NAT**: mapeia 1 IP privado para 1 IP público fixo.
+- NAT permite **múltiplas conexões simultâneas**, mesmo com poucas portas públicas.
+
+---
+
+✅ Finalize suas configurações com testes e logs para garantir que as regras NAT, DHCP e VLANs estejam funcionando como esperado.  
+Para acesso remoto seguro, utilize VPNs ao invés de expor portas de administração do FortiGate diretamente.
+
+---

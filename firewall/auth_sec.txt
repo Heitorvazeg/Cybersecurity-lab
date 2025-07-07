@@ -1,98 +1,151 @@
-Autenticação e Segurança no Fortigate
-🔐 Autenticação
+# 🔐 Autenticação e Segurança no FortiGate
 
-    Para acessar a internet, pode ser exigido login (autenticação).
+Este guia cobre as principais funcionalidades de segurança e autenticação no firewall **FortiGate**, incluindo integração com Active Directory, controle de aplicações, web filtering e configuração de túneis VPN seguros.
 
-    Usuário pode ser local no Fortigate ou em servidor externo (ex: Active Directory).
+---
 
-    Modos:
+## 🧾 Autenticação
 
-        Ativa: usuário precisa fazer login para acessar.
+- A autenticação pode ser exigida para acessar a internet.
+- Usuários podem ser:
+  - **Locais**, criados diretamente no FortiGate.
+  - **Externos**, como os do **Active Directory (AD)** via LDAP.
 
-        Passiva: autenticação automática (passivo mestre).
+### 🎛️ Modos de Autenticação
 
-    Suporta autenticação de 2 fatores (2FA).
+| Modo     | Descrição                                                     |
+|----------|----------------------------------------------------------------|
+| **Ativa**   | O usuário precisa **fazer login manualmente** para obter acesso. |
+| **Passiva** | Autenticação automática (ex: via autenticação transparente).     |
 
-    Permite trabalhar com grupos de usuários para facilitar regras e políticas.
+- Suporta **autenticação de dois fatores (2FA)**.
+- Pode-se utilizar **grupos de usuários** para aplicar regras específicas.
 
-👤 Criar usuário local
+---
 
-    Menu: User Authentication -> User Definition -> Create New
+## 👤 Criar Usuário Local
 
-    Pode associar usuários a grupos locais criados em User Groups.
+> Menu: `User & Authentication > User Definition > Create New`
 
-    Usuários locais são independentes do AD.
+- Define login e senha para uso direto no FortiGate.
+- Pode associar o usuário a **grupos locais** (menu: `User Groups`).
+- **Usuários locais são independentes de AD.**
 
-🖧 Configurar LDAP (Active Directory)
+---
 
-    Menu: User Authentication -> LDAP -> New
+## 🖧 Integração com Active Directory (LDAP)
 
-    Definir IP do servidor AD.
+> Menu: `User & Authentication > LDAP > Create New`
 
-    Common Name Identifier: samAccountName
+- Insira o IP do controlador de domínio (AD).
+- **Common Name Identifier**: `samAccountName`
+- Permite:
+  - Autenticar com as credenciais do domínio.
+  - Criar **grupos baseados no AD** para políticas de acesso.
+  - Usar os grupos como **source nas políticas de firewall**.
 
-    Pode criar grupos baseados no AD para usar em políticas (ex: GRP users).
+---
 
-    Grupo AD deve ser referenciado como source na política de firewall.
+## 🌐 Web Filtering (Filtro de Web)
 
-🌐 Web Filtering
+- Utiliza o serviço **FortiGuard** (licença requerida).
+- Bloqueia URLs por **categorias** (ex: redes sociais, jogos, pornografia).
 
-    Web filtering funciona integrado com FortiGuard (licenciado).
+### 📌 Configuração
 
-    URL filtering: bloqueio por categorias (ex: redes sociais, jogos).
+> Menu: `Security Profiles > Web Filter > Create New`
 
-    Configuração:
+- Crie perfil de filtragem com regras personalizadas.
+- **Associe esse perfil a uma política de firewall** para que seja efetivo.
 
-        Security Profile -> Web Filtering -> New
+---
 
-        Pode ativar nas políticas de firewall para tráfego geral de internet.
+## 📱 Controle de Aplicações (App Control)
 
-📱 Controle de Aplicações (App Control)
+- Controla **aplicações executadas nas máquinas**, não apenas URLs.
+- Utiliza **assinaturas de aplicações** e **categorias padrão** (exige licença).
 
-    Controla uso de aplicações nas máquinas da rede (não URLs).
+### 🧩 Aplicações Suportadas
 
-    Usa assinaturas padrão e categorias (necessita licença).
+- VPNs não autorizadas
+- Jogos online
+- Mensageiros instantâneos
 
-    Pode bloquear apps ou endpoints específicos.
+> Deve ser **vinculado a uma política de firewall** para funcionar.
 
-    Deve ser associado à política de firewall.
+---
 
-🌐 DNS Filtering
+## 🌐 DNS Filtering
 
-    Semelhante ao URL filtering, mas bloqueia via DNS.
+- Semelhante ao URL filtering, mas age **antes**, na resolução DNS.
+- Bloqueia **domínios inteiros** antes mesmo da tentativa de conexão HTTP/S.
 
-    Bloqueia tudo de domínios indesejados.
+> Configuração parecida com Web Filtering, também via `Security Profiles`.
 
-    Configuração similar ao URL filtering.
+---
 
-🛡️ Anti-vírus
+## 🛡️ Anti-vírus
 
-    Criar perfil novo para inspeção de protocolos (HTTP, FTP, SMTP etc).
+- Protege contra malwares e arquivos maliciosos na rede.
+- Inspeciona protocolos como:
+  - HTTP
+  - FTP
+  - SMTP
 
-    Configuração: config antivirus settings.
+> Configuração via: `Security Profiles > AntiVirus > Create New`
 
-🔑 VPN
+- Define perfis de análise profunda com ações (block, quarantine, monitor).
 
-    Permite acessar a rede remotamente via túneis seguros pela internet.
+---
 
-    Tipos:
+## 🔑 VPN - Virtual Private Network
 
-        Site to Site: conexão entre redes diferentes.
+Permite conexões **seguras** à rede interna pela internet.
 
-        Remote Access: acesso de usuário individual remoto.
+### Tipos de VPN:
 
-    O túnel usa criptografia para segurança.
+| Tipo              | Uso                                                                 |
+|-------------------|----------------------------------------------------------------------|
+| **Site to Site**  | Conecta **duas redes físicas diferentes**.                          |
+| **Remote Access** | Permite que **usuários individuais** acessem a rede remotamente.     |
 
-    Criar grupo VPN para usuários autorizados (normalmente TI).
+### 🧑‍💻 Requisitos
 
-    Criar endereço para rede remota (IP público).
+- Criar **grupo VPN** para usuários autorizados (geralmente equipe de TI).
+- Definir o **endereço IP remoto público**.
+- Atribuir **endereços IP privados via pool** para os clientes VPN.
 
-⚙️ Configurar IPsec Tunnel
+---
 
-    Criar novo túnel: NEW (custom ou remote access)
+## ⚙️ Configurando um IPsec Tunnel
 
-    Definir interface WAN e remote gateway (IP remoto).
+> Menu: `VPN > IPsec Wizard > Create New`
 
-    Configurar pool de IP para usuários remotos.
+### Etapas de configuração:
 
-    Criar política firewall para tráfego VPN → WAN sem NAT.
+1. **Selecione o modo**:
+   - *Custom* (manual)
+   - *Remote Access* (cliente individual)
+
+2. **Defina a Interface WAN**:
+   - Interface que conecta à internet.
+
+3. **Remote Gateway**:
+   - IP do FortiGate remoto (ou cliente remoto).
+
+4. **Pool de IP**:
+   - Faixa de IPs privados para os usuários conectados via VPN.
+
+5. **Política de firewall**:
+   - Crie regra `VPN → WAN` ou `VPN → LAN` **sem NAT**, permitindo o tráfego do túnel.
+
+---
+
+## 📘 Boas Práticas
+
+- Use **grupos** (locais ou AD) para aplicar regras específicas por perfil de usuário.
+- Aplique **Web Filtering e DNS Filtering** combinados para melhor cobertura.
+- Sempre monitore logs de autenticação para identificar tentativas suspeitas.
+- Mantenha o firmware atualizado e faça backups regulares das configurações.
+
+---

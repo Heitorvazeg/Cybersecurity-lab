@@ -1,80 +1,122 @@
-🔄 Firewall Policies
+# 🔄 Firewall Policies no FortiGate
 
-    Conjunto de regras que definem todo tráfego pelo Fortigate.
+Este documento detalha como funcionam as **políticas de firewall** no FortiGate, explicando seus componentes, objetos associados, uso de NAT, agendamento, FQDNs e boas práticas de configuração e segurança.
 
-    Configurações principais:
+---
 
-        Interface (onde entra o tráfego)
+## 🔐 O que são Firewall Policies?
 
-        Origem (source)
+- São o **conjunto de regras que controlam todo tráfego** que passa pelo FortiGate.
+- Cada política define o **comportamento do tráfego entre origem e destino**.
 
-        Destino (destination)
+### 📋 Configurações Principais de uma Regra
 
-        Schedule (horários permitidos)
+| Parâmetro           | Descrição                                                                 |
+|---------------------|---------------------------------------------------------------------------|
+| **Interface**        | Define onde o tráfego **entra** (ex: LAN, WAN, DMZ).                      |
+| **Origem (Source)**  | IPs, sub-redes, objetos ou usuários de onde o tráfego se origina.         |
+| **Destino**          | IPs, sub-redes ou domínios de destino do tráfego.                         |
+| **Schedule**         | Define **horários e dias** em que a regra está ativa.                     |
+| **Service**          | Protocolos ou portas (ex: HTTP, HTTPS, FTP, ICMP).                        |
+| **Action**           | Ação a ser tomada: `accept`, `deny` ou `ipsec`.                          |
+| **NAT**              | Ativa ou não a tradução de endereços.                                     |
+| **Security Profile** | Perfis de segurança aplicados: Web Filter, AntiVirus, App Control, etc.   |
+| **Logs**             | Registro de logs para auditoria e troubleshooting.                        |
 
-        Service (tipo de serviço/protocolo)
+### 🚫 Política Padrão
 
-        Action (permitir ou negar)
+- O FortiGate **nega por padrão** todo tráfego que não se encaixa em nenhuma política.
+- Por isso, **regras de permissão devem ser criadas manualmente** para liberar serviços específicos.
 
-        NAT (ativado ou não)
+---
 
-        Security Profile (ex: web filtering, antivírus)
+## 📦 Objetos Utilizados nas Políticas
 
-        Logs (habilitar para monitorar)
+Para facilitar a reutilização e organização das políticas, o FortiGate utiliza **objetos** configuráveis.
 
-    Política padrão (de fábrica) nega todo tráfego não listado (action deny).
+### Tipos Comuns de Objetos:
 
-    Regras devem liberar o tráfego necessário.
+- **Interfaces** (ex: port1, WAN1, LAN)
+- **Zonas** (agrupamentos lógicos de interfaces)
+- **Endereços** (IPs, sub-redes, ranges, FQDNs)
+- **Usuários** (locais ou via LDAP/AD)
+- **Serviços** (protocolos como HTTP, DNS, etc.)
+- **Calendários (Schedules)**
+- **Regras de NAT**
+- **Security Profiles** (web filter, antivirus, etc.)
 
-📦 Objetos em Políticas
+### 🧩 Observações Importantes
 
-    Tipos de objetos usados nas políticas:
+- Usar **zonas** permite aplicar a mesma regra a múltiplas interfaces.
+- Ao aplicar uma **zona** em uma interface com políticas já existentes, pode haver **conflitos**.  
+  ➤ **Solução:** remova as políticas antigas antes de aplicar a zona.
 
-        Interfaces
+---
 
-        Zonas
+## 🌐 FQDN (Fully Qualified Domain Name)
 
-        Endereços (IPs, sub-redes)
+- Permite criar regras com **endereços baseados em nomes de domínio** (DNS).
+- Exemplo de uso: permitir tráfego para `*.google.com`.
 
-        Usuários
+### 💡 Aplicação
 
-        Serviços (protocolos)
+- Cria-se um objeto do tipo `FQDN` com o domínio.
+- Usa-se DNS confiável (ex: 8.8.8.8) para resolução.
 
-        Calendários (schedules)
+---
 
-        Regras de NAT
+## 🗺️ Endereços e Políticas
 
-        Perfis de segurança (security profile)
+- Pode-se criar objetos para:
+  - Regiões geográficas (Geo-IP)
+  - LANs específicas
+  - IPs individuais ou faixas
+- **Fonte (source)** em uma política pode conter múltiplos objetos.
+- É possível associar a políticas usuários autenticados via login.
 
-    Para aplicar regras iguais em várias interfaces, use zonas.
+---
 
-    Se aplicar zona numa interface com políticas existentes, pode causar conflito (elimine as políticas antigas primeiro).
+## ⏰ Schedule (Agendamento de Políticas)
 
-🌐 FQDN (Fully Qualified Domain Name)
+- Define **quando uma política estará ativa** (dias da semana, horas específicas).
+- Útil para:
+  - Controle de horário de navegação.
+  - Liberação de acesso temporário.
+  - Bloqueios programados.
 
-    Permite definir URLs específicas para liberar via DNS.
+> Menu: `Policy & Objects > Schedules`
 
-    Exemplo: usar DNS do Google para resolver URLs.
+---
 
-🗺️ Endereços e Políticas
+## 🔄 NAT (Network Address Translation)
 
-    Pode criar objetos de endereço para regiões geográficas, LANs, IPs específicos.
+- Controla a tradução de endereços IP privados para públicos (e vice-versa).
 
-    Em políticas, pode usar múltiplos objetos de origem.
+### 🧱 Virtual IP (VIP)
 
-    Pode usar usuário configurado para controle de acesso baseado em login.
+- É o equivalente a **DNAT**: direciona tráfego de IP público para um IP interno.
+- Usado para expor servidores internos (ex: webserver) via IP público.
 
-⏰ Schedule (Agendamento)
+### ⚠️ Boas Práticas
 
-    Permite definir horários para quando as políticas estarão ativas.
+- **Evite expor o FortiGate** diretamente na internet.
+  - Use **VPNs** para acesso administrativo remoto.
+- As regras NAT são processadas **em ordem sequencial**.
+  - ➤ A primeira que corresponder será usada.
+  - ➤ Coloque regras **mais específicas antes das mais genéricas**.
 
-🔄 NAT
+---
 
-    Virtual IP (VIP) é o DNAT.
+## 📘 Exemplo de Política Completa
 
-    Evite expor o Fortigate diretamente na internet. Use VPN para acessar a interface de gerenciamento.
-
-    NAT processa regras sequencialmente na tabela; para na primeira regra que corresponder.
-
-    Regras mais específicas devem vir antes das gerais.
-
+```plaintext
+From: LAN
+To: WAN
+Source: Grupo de usuários AD
+Destination: all
+Service: HTTP, HTTPS
+Schedule: work_hours
+Action: ACCEPT
+NAT: Enabled
+Security Profiles: Web Filter, Antivirus
+Log Allowed Traffic: Enabled

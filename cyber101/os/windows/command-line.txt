@@ -1,0 +1,76 @@
+# 🖥️ Windows CLI - Comandos Básicos e Troubleshooting
+
+Este documento cobre os principais comandos de linha de comando (CLI) do Windows voltados para **diagnóstico de rede**, **gerenciamento de arquivos**, **visualização de sistema** e **administração de processos**.
+
+---
+
+## 🚀 Por que usar CLI?
+
+- A **linha de comando** tem uma curva de aprendizado maior, mas oferece:
+  - **Velocidade**: executa tarefas rapidamente.
+  - **Eficiência**: scripts e automações.
+  - **Precisão**: sem dependência de interface gráfica.
+
+---
+
+## 🧠 Informações Básicas do Sistema
+
+| Comando       | Função                                                                 |
+|---------------|------------------------------------------------------------------------|
+| `set`         | Mostra as variáveis de ambiente e o `PATH` da linha de comando.        |
+| `ver`         | Exibe a versão do sistema operacional.                                 |
+| `systeminfo`  | Detalhes completos do sistema (SO, processador, RAM, domínio, etc.).   |
+| `help`        | Exibe ajuda geral com os comandos disponíveis.                         |
+| `cls`         | Limpa a tela do terminal.                                              |
+
+---
+
+## 🌐 Troubleshooting de Rede
+
+| Comando                | Descrição                                                                 |
+|------------------------|---------------------------------------------------------------------------|
+| `ipconfig`             | Mostra informações básicas de rede da máquina.                           |
+| `ipconfig /all`        | Exibe informações detalhadas (DNS, DHCP, MAC address, etc.).             |
+| `ping <destino>`       | Envia pacotes ICMP para verificar a conectividade (inspirado em ping-pong). |
+| `tracert <destino>`    | Rastreia a rota que os pacotes percorrem até o destino final.            |
+| `nslookup example.com` | Retorna o IP associado a um domínio.                                     |
+| `nslookup example.com 1.1.1.1` | Usa um DNS específico (ex: Cloudflare) para a consulta.       |
+| `netstat`              | Lista conexões de rede e portas em uso.                                  |
+| `netstat -a`           | Mostra todas as conexões ativas e portas em escuta.                      |
+| `netstat -o`           | Mostra os PIDs (Process IDs) associados às conexões.                     |
+
+---
+
+## 📁 Gerenciamento de Arquivos e Disco
+
+| Comando           | Descrição                                                                 |
+|-------------------|---------------------------------------------------------------------------|
+| `cd`              | Altera o diretório atual.                                                 |
+| `dir`             | Lista os arquivos e pastas do diretório atual.                            |
+| `dir /a`          | Mostra inclusive arquivos ocultos.                                        |
+| `tree`            | Mostra a estrutura do diretório de forma visual (em árvore).              |
+| `mkdir <nome>`    | Cria um novo diretório.                                                   |
+| `rmdir <nome>`    | Remove um diretório vazio.                                                |
+| `type <arquivo>`  | Exibe o conteúdo de um arquivo de texto.                                  |
+| `move`            | Move arquivos ou pastas de um local para outro.                           |
+| `del` ou `erase`  | Deleta arquivos.                                                          |
+| `*` (coringa)     | Pode ser usado para selecionar múltiplos arquivos (ex: `del *.txt`).      |
+
+---
+
+## ⚙️ Gerenciamento de Tarefas e Processos
+
+| Comando       | Função                                     |
+|---------------|---------------------------------------------|
+| `tasklist`    | Lista os processos em execução.            |
+| `taskkill`    | Encerra um processo específico. Exemplo: `taskkill /PID 1234 /F` |
+
+---
+
+## 📝 Dica
+
+Você pode combinar comandos com `>` para salvar a saída em arquivos:
+
+```bash
+ipconfig /all > rede.txt
+systeminfo > sistema.txt
