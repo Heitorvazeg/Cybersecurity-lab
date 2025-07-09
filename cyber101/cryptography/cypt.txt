@@ -1,0 +1,132 @@
+# Criptografia
+
+## Como prevenir que terceiros leiam suas mensagens?
+
+Para garantir que somente as pessoas autorizadas possam ler suas mensagens, é essencial criar canais seguros, especialmente em servidores remotos.
+ Isso significa que a comunicação deve ter **confidencialidade** e **integridade**, impedindo acessos não autorizados ou modificações.
+
+---
+
+## O que é criptografia?
+
+A criptografia é o conjunto de técnicas que permitem garantir a segurança da informação em ambientes com possíveis ameaças,
+ evitando que terceiros possam acessar dados sensíveis.
+
+- **Plaintext:** Dados originais que serão criptografados.
+- **Ciphertext:** Dados criptografados, ilegíveis sem a chave correta.
+- **Chave:** Informação usada para criptografar e descriptografar os dados.
+- **Cipher:** Algoritmo que transforma plaintext em ciphertext e vice-versa.
+
+Para recuperar o plaintext a partir do ciphertext, é necessário conhecer a chave correta e o algoritmo utilizado.
+
+---
+
+## Tipos de criptografia
+
+### Criptografia Simétrica
+
+- Utiliza **a mesma chave** para criptografar e descriptografar.
+- Também chamada de **private key cryptography**.
+- Exemplos:
+  - **DES (Data Encryption Standard):** Chave de 56 bits.
+  - **3DES (Triple DES):** Chave de 168 bits.
+  - **AES (Advanced Encryption Standard):** Padrão atual amplamente adotado.
+
+### Criptografia Assimétrica
+
+- Utiliza um par de chaves: **pública** (para criptografar) e **privada** (para descriptografar).
+- Geralmente mais lenta que a simétrica.
+- Chaves maiores, normalmente 2048 bits ou mais.
+- Exemplos:
+  - **RSA**
+  - **ECC (Elliptic Curve Cryptography):** Com 248 bits, oferece segurança equivalente ao RSA com 3000 bits.
+
+  -Para comunicação pública, alguém te manda a mensagem criptografada com a sua chave publica, e você
+  responde com chave pública dela. Ambos vão conseguir descriptografar a mensagem.
+---
+
+## Fundamentos matemáticos básicos
+
+- **Operação XOR (Exclusive OR):**  
+  Operador lógico binário que compara dois bits e retorna 1 se forem diferentes, 0 se forem iguais.  
+  Simbologia: `^`
+
+- **Operação Módulo:**  
+  Retorna o resto da divisão de um número X por outro Y.  
+  Sintaxe comum: `X % Y` ou `X mod Y`.
+
+---
+
+## Histórico rápido: Cifra de César
+
+Um dos primeiros algoritmos de criptografia.  
+Desloca as letras do alfabeto um número fixo de posições para frente para criptografar a mensagem.  
+Como o alfabeto tem 26 letras, basta tentar as 26 possibilidades para quebrar a cifra (força bruta).
+
+---
+
+hashing: Quase como uma assinatura de uma mensagem. Transforma um entrada em uma saida de tamanho
+fixo chamada hash.
+É praticamente unica para cada entrada diferente.
+Pequenas mudanças geram uma avalanche que altera completamente o hash.
+
+Verifica a integridade dos dados.
+armazenas senhas.
+Hash tables usam hash para acesso rapido.
+Assinaturas digitais dos arquivos.
+
+colisões:
+Duas entradas diferentes geram o mesmo hash.
+
+A mesma entrada sempre gera o mesmo hash. Computar o hash deve ser rapido. é praticamente
+impossivel encontrar a entrada original atraves do hash.
+Efeito avalanche.
+REsistente a colisões.
+
+algoritmos populares: md5: rapido mas vulneravel a colisoes.
+sha-1.
+SHA-256..
+bcrypt: hashing especificos de senha.
+
+## Hashing
+
+Hashing é quase como uma assinatura de uma mensagem.  
+Transforma uma entrada em uma saída de tamanho fixo chamada **hash**.  
+
+- É praticamente única para cada entrada diferente.  
+- Pequenas mudanças na entrada geram uma avalanche que altera completamente o hash.  
+
+### Aplicações
+
+- Verificar a integridade dos dados.  
+- Armazenar senhas de forma segura.  
+- Hash tables usam hash para acesso rápido.  
+- Assinaturas digitais de arquivos.
+
+---
+
+## Colisões
+
+- Ocorrem quando **duas entradas diferentes geram o mesmo hash**.  
+- Uma boa função de hash é **resistente a colisões**, tornando quase impossível encontrar tais casos.
+
+---
+
+## Propriedades importantes de funções de hash
+
+- A mesma entrada sempre gera o mesmo hash (determinística).  
+- Computar o hash deve ser rápido.  
+- É praticamente impossível encontrar a entrada original a partir do hash (pré-imagem resistente).  
+- Efeito avalanche: pequenas mudanças na entrada causam grandes mudanças no hash.  
+- Resistência a colisões.
+
+---
+
+## Algoritmos populares de hashing
+
+- **MD5:** Rápido, mas vulnerável a colisões.  
+- **SHA-1:** Mais seguro que MD5, mas também obsoleto para usos críticos.  
+- **SHA-256:** Seguro e amplamente utilizado.  
+- **bcrypt:** Algoritmo específico para hashing de senhas, inclui fator de custo para dificultar ataques.
+
+---

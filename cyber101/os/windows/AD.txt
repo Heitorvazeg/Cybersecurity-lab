@@ -134,3 +134,25 @@ Permite acessar máquinas no domínio com contas autorizadas.
 - Acesse via **Group Policy Management Console (GPMC)**:
   ```bash
   gpmc.msc
+
+### Criação e Distribuição de GPOs
+
+  -Cria-se primeiro a GPO em Group Policy Objects.
+  -Em seguida, a GPO é linkada à OU correspondente.
+  -GPOs são distribuídas pela rede através da pasta compartilhada SYSVOL.
+  -A pasta SYSVOL é armazenada no Controlador de Domínio (DC).
+  -Todos os usuários geralmente têm acesso à pasta SYSVOL.
+
+### Kerberos
+
+  -Protocolo de autenticação padrão do Active Directory.
+  -Utiliza tickets como provas de autenticações anteriores.
+  -Garante autenticação segura entre clientes e serviços.
+
+### Trees, Forests e Trusts
+
+  -Necessário quando há mais de um domínio, como em empresas grandes.
+  -O Active Directory suporta a integração de vários domínios numa estrutura em árvore (tree).
+  -Exemplo de hierarquia:
+
+---

@@ -18,4 +18,5 @@ cybersecurity/
 ├── exploits/   # Exploits
 ├── firewall/   # Estudos de firewall
 ├── scripts/    # Scripts próprios (Python, Bash, PowerShell)
+├── tools/      # Ferramentas comuns
 └── README.md   # Esta explicação geral
