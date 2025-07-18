@@ -32,6 +32,8 @@ Para recuperar o plaintext a partir do ciphertext, é necessário conhecer a cha
   - **3DES (Triple DES):** Chave de 168 bits.
   - **AES (Advanced Encryption Standard):** Padrão atual amplamente adotado.
 
+-criptografia rápida
+
 ### Criptografia Assimétrica
 
 - Utiliza um par de chaves: **pública** (para criptografar) e **privada** (para descriptografar).
@@ -43,6 +45,9 @@ Para recuperar o plaintext a partir do ciphertext, é necessário conhecer a cha
 
   -Para comunicação pública, alguém te manda a mensagem criptografada com a sua chave publica, e você
   responde com chave pública dela. Ambos vão conseguir descriptografar a mensagem.
+  -Não pode passar a chave privada para a internet. Utiliza-se de criptografia simétrica pra passar
+  a chave pela primeira vez.
+  -Usado muitas vezes para estabelecer uma comunicação simetrica
 ---
 
 ## Fundamentos matemáticos básicos

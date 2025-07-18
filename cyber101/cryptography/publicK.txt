@@ -1,0 +1,79 @@
+## RSA - Algoritmo de Criptografia Assimétrica
+- Multiplica dois valores e entrega um resultado.
+- O problema é que é difícil fazer o processo inverso, ou seja, pegar o resultado e transformar nos números originais.
+
+---
+
+## Diffie-Hellman Key Exchange
+- Forma de estabelecer uma chave secreta em um meio inseguro sem ter chaves compartilhadas previamente.
+- Usa segredos independentes e um material comum.
+- Segredos combinados são quase impossíveis de separar.
+- A ordem não importa.
+
+### Funcionamento:
+- A, B: segredos individuais; C: material comum.
+- Cada um calcula:  
+
+A = g^a mod p
+B = g^b mod p
+
+- Depois, cada um recebe o valor calculado pelo outro e faz:  
+
+(valor recebido)^(segredo próprio) mod p
+
+- Ambos chegam à mesma chave secreta.
+
+Essa chave é usada para gerar uma chave simétrica.
+
+---
+
+## SSH (Secure Shell)
+- Existe uma confirmação inicial para adicionar o host na lista de hosts confiáveis.
+- Envia uma chave pública para verificar se o host é reconhecido.
+- Para autenticação, o ideal é usar tokens ao invés de senhas.
+- `ssh-keygen` gera chaves privada e pública de acordo com o algoritmo escolhido.
+- A passphrase protege a chave privada com uma camada extra de criptografia.
+
+---
+
+## Assinaturas Digitais e Certificados
+
+### Assinaturas Digitais
+- Permitem verificar a autenticidade e integridade de uma mensagem.
+- Processo:
+  - Gera-se um hash da mensagem original.
+  - O hash é criptografado com a chave privada (essa é a assinatura).
+  - Envia-se a mensagem junto com a assinatura.
+- Quem recebe:
+  - Descriptografa o hash usando a chave pública.
+  - Compara o hash da mensagem recebida com o hash descriptografado para validar.
+- **Nota:** Assinatura digital não é "assinatura manual" nem uma imagem digital.
+
+### Certificados
+- Garantem que um site ou entidade é autêntico.
+- CA (Certificate Authority): autoridades confiáveis que emitem certificados.
+- Navegadores já vêm com uma lista de CAs confiáveis.
+- Para domínios próprios, é possível criar certificados TLS personalizados.
+
+---
+
+## GPG (GNU Privacy Guard)
+- Implementação open source do PGP.
+- Criptografa arquivos usando assinaturas e algoritmos criptográficos.
+- Gera um par de chaves: pública e privada.
+- Permite importar e exportar chaves públicas.
+
+### Comandos básicos:
+- Gerar par de chaves: gpg --full-generate-key
+
+- Exportar chave pública: gpg --armor --export email@example.com > chave-pub.asc
+
+- Importar chave pública: gpg --import chave.asc
+
+- Criptografar arquivo para um destinatário: gpg --encrypt --recipient email@example.com arquivo
+
+- Descriptografar arquivo: gpg --decrypt arquivo.txt.gpg > arquivo.txt
+
+- Assinar arquivo: gpg --sign arquivo.txt
+
+- Verificar assinatura: gpg --verify arquivo.txt.gpg
