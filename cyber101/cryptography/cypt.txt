@@ -70,29 +70,6 @@ Como o alfabeto tem 26 letras, basta tentar as 26 possibilidades para quebrar a 
 
 ---
 
-hashing: Quase como uma assinatura de uma mensagem. Transforma um entrada em uma saida de tamanho
-fixo chamada hash.
-É praticamente unica para cada entrada diferente.
-Pequenas mudanças geram uma avalanche que altera completamente o hash.
-
-Verifica a integridade dos dados.
-armazenas senhas.
-Hash tables usam hash para acesso rapido.
-Assinaturas digitais dos arquivos.
-
-colisões:
-Duas entradas diferentes geram o mesmo hash.
-
-A mesma entrada sempre gera o mesmo hash. Computar o hash deve ser rapido. é praticamente
-impossivel encontrar a entrada original atraves do hash.
-Efeito avalanche.
-REsistente a colisões.
-
-algoritmos populares: md5: rapido mas vulneravel a colisoes.
-sha-1.
-SHA-256..
-bcrypt: hashing especificos de senha.
-
 ## Hashing
 
 Hashing é quase como uma assinatura de uma mensagem.  
