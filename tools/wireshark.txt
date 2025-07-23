@@ -1,0 +1,55 @@
+# Guia Básico do Wireshark
+
+Wireshark é uma das ferramentas mais populares e poderosas para análise e captura de pacotes de rede. É amplamente usada por profissionais de segurança, administradores de rede e desenvolvedores para diagnosticar problemas, monitorar tráfego e aprender sobre protocolos de rede.
+
+---
+
+## O que é Wireshark?
+
+- Um analisador de pacotes (packet analyzer) que captura dados em tempo real na rede.  
+- Permite visualizar o conteúdo dos pacotes enviados e recebidos em uma interface gráfica amigável.  
+- Suporta dezenas de protocolos diferentes, desde Ethernet, TCP/IP até protocolos específicos como HTTP, DNS, SSL/TLS, etc.
+
+---
+
+## Para que serve o Wireshark?
+
+- Diagnóstico e solução de problemas de rede.  
+- Monitoramento de tráfego para identificar gargalos ou tráfego suspeito.  
+- Análise detalhada de protocolos para desenvolvimento e aprendizado.  
+- Auxílio em testes de segurança e investigação de incidentes.
+
+---
+
+## Como usar o Wireshark?
+
+### 1. Captura de pacotes
+
+- Escolha a interface de rede que deseja monitorar (ex: `eth0`, `wlan0`).  
+- Clique em "Start" para iniciar a captura.  
+- O Wireshark exibirá em tempo real todos os pacotes que passam pela interface selecionada.
+
+### 2. Filtros de captura e exibição
+
+- **Filtros de captura**: limitam quais pacotes são capturados (ex: só pacotes HTTP).  
+- **Filtros de exibição**: aplicados após a captura para facilitar análise (ex: `ip.addr == 192.168.1.1`).
+
+### 3. Análise dos pacotes
+
+- Clique em um pacote para ver detalhes em camadas (Ethernet, IP, TCP/UDP, etc).  
+- Visualize dados brutos, decodificados e interpretados.  
+- Reassemble fluxos TCP para ler conversas completas.
+
+---
+
+## Exemplos de filtros úteis
+
+| Filtro                      | Descrição                            |
+|-----------------------------|------------------------------------|
+| `ip.addr == 192.168.1.10`   | Pacotes enviados ou recebidos pelo IP especificado |
+| `tcp.port == 80`            | Pacotes TCP com porta 80 (HTTP)    |
+| `http`                      | Todo tráfego HTTP                  |
+| `dns`                       | Todo tráfego DNS                   |
+| `icmp`                      | Pacotes ICMP (ping, etc)           |
+
+---

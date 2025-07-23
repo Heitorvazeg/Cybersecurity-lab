@@ -1,0 +1,155 @@
+# Guia Básico de Uso do Nmap
+
+Este documento traz uma visão geral das funcionalidades básicas e avançadas do **Nmap**,
+ uma ferramenta poderosa para mapeamento de redes, descoberta de hosts, serviços e análise de vulnerabilidades.
+
+---
+
+## O que o Nmap faz?
+
+- Escaneia IPs e portas ativas.
+- Identifica dispositivos, portas abertas e serviços rodando.
+- Detecta possíveis vulnerabilidades.
+- Permite escanear redes únicas ou múltiplas, dispositivos móveis, web e muito mais.
+
+---
+
+## Comandos e Modos de Scanning
+
+### 1. Scan de dispositivos ativos (Ping Scan)  
+Detecta dispositivos ativos em uma sub-rede específica:  
+
+nmap -sn <ip/mascara>
+
+
+### 2. Scan em host único  
+Escaneia todas as portas abertas de um host:  
+
+nmap <host>
+
+
+### 3. Stealth Scan (TCP SYN Scan)  
+Escaneia portas abertas sem completar a conexão TCP (mais difícil de detectar):  
+
+sudo nmap -sS <host>
+
+
+### 4. Detecção de serviços (Version Detection)  
+Mostra quais serviços e versões estão rodando nas portas abertas:  
+
+nmap -sV <host>
+
+
+### 5. OS Scanning (Detecção do Sistema Operacional)  
+Tenta identificar o sistema operacional baseado nas características TCP/IP:  
+
+sudo nmap -O <host>
+
+
+*Obs:* Firewalls e sistemas IDS podem bloquear ou alterar as respostas e prejudicar essa detecção.
+
+### 6. Aggressive Scanning (Scan Agressivo)  
+Combina detecção de sistema, versão, scripts e traceroute:  
+
+sudo nmap -A <host>
+
+
+*Obs:* Mais informações coletadas, porém mais perceptível para firewalls e IDS.
+
+### 7. Scan em múltiplos hosts  
+Você pode escanear vários hosts usando ranges, curingas `*`, entre outros.
+
+### 8. Port Scanning  
+Escaneia portas específicas:  
+
+nmap -p <porta(s)> <host>
+
+
+### 9. Outras opções úteis  
+- Verbose (mais detalhes na saída):  
+
+nmap -v <host>
+
+- Salvar saída em arquivo:  
+
+nmap -oN resultado.txt <host>
+
+- Mostrar ajuda com todos os comandos:  
+
+nmap -h
+
+---
+
+## Nmap Scripting Engine (NSE)
+
+O NSE permite automatizar testes de segurança usando scripts escritos em **Lua**. Esses scripts ampliam a funcionalidade do Nmap para detecção de vulnerabilidades, coleta de informações, brute force e muito mais.
+
+---
+
+## Alguns scripts padrão do NSE
+
+| Script           | Descrição                                     |
+|------------------|-----------------------------------------------|
+| dns-brute        | Descobre subdomínios comuns de um domínio.   |
+| http-headers     | Lista os cabeçalhos HTTP retornados pelo servidor. |
+| http-methods     | Descobre métodos HTTP permitidos (GET, POST, etc).|
+| ssh-hostkey      | Coleta a chave pública do servidor SSH.       |
+| ssl-cert         | Baixa e mostra detalhes do certificado SSL/TLS. |
+| snmp-info        | Coleta informações básicas via SNMP.          |
+| whois-domain     | Faz consultas WHOIS para domínios.             |
+
+---
+
+## Scripts NSE por categoria
+
+### Categoria: auth (autenticação)  
+- ftp-anon — verifica se o FTP permite login anônimo.  
+- http-auth-finder — tenta descobrir áreas protegidas por autenticação web.  
+- mysql-brute — força bruta em login MySQL.  
+- ssh-brute — força bruta em login SSH.  
+- rdp-ntlm-info — coleta info de autenticação NTLM via RDP.  
+- vnc-brute — força bruta em servidores VNC.
+
+### Categoria: vuln (vulnerabilidades conhecidas)  
+- smb-vuln-ms17-010 — detecta a vulnerabilidade EternalBlue (WannaCry).  
+- http-shellshock — verifica vulnerabilidade Shellshock.  
+- http-vuln-cve2017-5638 — testa vulnerabilidade Apache Struts.  
+- ssl-heartbleed — detecta vulnerabilidade Heartbleed em OpenSSL.  
+- http-slowloris — verifica vulnerabilidade Slowloris no HTTP.  
+- smb-vuln-conficker — detecta worm Conficker.  
+- ftp-vsftpd-backdoor — detecta backdoor no vsftpd.
+
+### Categoria: intrusive (testes que podem causar impacto)  
+- dns-recursion — testa se o DNS permite recursão aberta.  
+- smtp-enum-users — tenta enumerar usuários via SMTP.  
+- snmp-brute — força bruta em comunidades SNMP.  
+- ms-sql-brute — força bruta em MS SQL Server.  
+- rdp-vuln-ms12-020 — testa vulnerabilidade crítica em RDP.  
+- http-sql-injection — tenta descobrir SQL injection em web apps.  
+- smb-enum-users — enumera usuários SMB.
+
+---
+
+## Como usar scripts NSE
+
+Rodar um script específico:  
+
+sudo nmap --script <nome-do-script> <alvo>
+
+
+Rodar todos os scripts de uma categoria:  
+
+sudo nmap --script vuln <alvo>
+sudo nmap --script auth <alvo>
+sudo nmap --script intrusive <alvo>
+
+
+Combinar múltiplas categorias ou scripts:  
+
+sudo nmap --script "auth or vuln or intrusive" <alvo>
+
+---
+
+## Dicas finais
+
+- Use `sudo` para rodar scans que requerem privilégios (ex: `-sS`, `-O`).  

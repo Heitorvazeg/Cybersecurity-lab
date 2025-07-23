@@ -1,0 +1,7 @@
+john the ripper.
+
+Quebra de senhas.
+Utiliza de bruteforce.
+
+Nao ataca senhas diretamente, ele tenta descobrir a senha a partir
+de um hash.
